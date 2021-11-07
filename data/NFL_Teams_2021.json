@@ -1,0 +1,324 @@
+{
+  "teams": [
+    {
+      "Team": "ARI",
+      "Name": "Arizona Cardinals",
+      "Stadium": "State Farm Stadium",
+      "Address": "1 Cardinals Dr, Glendale, AZ 85305",
+      "Color1": "#97233f",
+      "Color2": "#000000",
+      "X_Coordinate": -112.2612,
+      "Y_Coordinate": 33.5287
+    },
+    {
+      "Team": "ATL",
+      "Name": "Atlanta Falcons",
+      "Stadium": "Mercedes-Benz Stadium",
+      "Address": "125 Ted Turner Dr NW, Atlanta, GA 30303",
+      "Color1": "#a71930",
+      "Color2": "#000000",
+      "X_Coordinate": -84.3912,
+      "Y_Coordinate": 33.7579
+    },
+    {
+      "Team": "BAL",
+      "Name": "Baltimore Ravens",
+      "Stadium": "M&T Bank Stadium",
+      "Address": "1101 Russell St, Baltimore, MD 21230",
+      "Color1": "#000000",
+      "Color2": "#241773",
+      "X_Coordinate": -76.624,
+      "Y_Coordinate": 39.2786
+    },
+    {
+      "Team": "BUF",
+      "Name": "Buffalo Bills",
+      "Stadium": "Bills Stadium",
+      "Address": "1 Bills Dr, Orchard Park, NY 14127",
+      "Color1": "#00338d",
+      "Color2": "#c60c30",
+      "X_Coordinate": -78.7862,
+      "Y_Coordinate": 42.7719
+    },
+    {
+      "Team": "CAR",
+      "Name": "Carolina Panthers",
+      "Stadium": "Bank of America Stadium",
+      "Address": "800 S Mint St, Charlotte, NC 28202",
+      "Color1": "#0085ca",
+      "Color2": "#000000",
+      "X_Coordinate": -80.8529,
+      "Y_Coordinate": 35.2243
+    },
+    {
+      "Team": "CHI",
+      "Name": "Chicago Bears",
+      "Stadium": "Soldier Field",
+      "Address": "1410 Special Olympics Dr, Chicago, IL 60605",
+      "Color1": "#0b162a",
+      "Color2": "#c83803",
+      "X_Coordinate": -87.6263,
+      "Y_Coordinate": 41.8693
+    },
+    {
+      "Team": "CIN",
+      "Name": "Cincinatti Bengals",
+      "Stadium": "Paul Brown Stadium",
+      "Address": "1 Paul Brown Stadium, Cincinnati, OH 45202",
+      "Color1": "#000000",
+      "Color2": "#fb4f14",
+      "X_Coordinate": -84.5151,
+      "Y_Coordinate": 39.096
+    },
+    {
+      "Team": "CLE",
+      "Name": "Cleveland Browns",
+      "Stadium": "First Energy Stadium",
+      "Address": "100 Alfred Lerner Way, Cleveland, OH 44114",
+      "Color1": "#311d00",
+      "Color2": "#ff3c00",
+      "X_Coordinate": -81.6991,
+      "Y_Coordinate": 41.5049
+    },
+    {
+      "Team": "DAL",
+      "Name": "Dallas Cowboys",
+      "Stadium": "At&T Stadium",
+      "Address": "1 AT&T Way, Arlington, TX 76011",
+      "Color1": "#002244",
+      "Color2": "#869397",
+      "X_Coordinate": -97.0897,
+      "Y_Coordinate": 32.7464
+    },
+    {
+      "Team": "DEN",
+      "Name": "Denver Broncos",
+      "Stadium": "Empower Field at Mile High",
+      "Address": "1701 Bryant St, Denver, CO 80204",
+      "Color1": "#fb4f14",
+      "Color2": "#002244",
+      "X_Coordinate": -105.0186,
+      "Y_Coordinate": 39.7451
+    },
+    {
+      "Team": "DET",
+      "Name": "Detroit Lions",
+      "Stadium": "Ford Field",
+      "Address": "2000 Brush St, Detroit, MI 48226",
+      "Color1": "#0076b6",
+      "Color2": "#b0b7bc",
+      "X_Coordinate": -83.047,
+      "Y_Coordinate": 42.3394
+    },
+    {
+      "Team": "GB",
+      "Name": "Green Bay Packers",
+      "Stadium": "Lambeau Field",
+      "Address": "1265 Lombardi Ave, Green Bay, WI 54304",
+      "Color1": "#203731",
+      "Color2": "#ffb612",
+      "X_Coordinate": -88.0618,
+      "Y_Coordinate": 44.5011
+    },
+    {
+      "Team": "HOU",
+      "Name": "Houston Texans",
+      "Stadium": "NRG Stadium",
+      "Address": "NRG Pkwy, Houston, TX 77054",
+      "Color1": "#03202f",
+      "Color2": "#a71930",
+      "X_Coordinate": -95.4063,
+      "Y_Coordinate": 29.6864
+    },
+    {
+      "Team": "IND",
+      "Name": "Indiana Colts",
+      "Stadium": "Lucas Oil Stadium",
+      "Address": "500 S Capitol Ave, Indianapolis, IN 46225",
+      "Color1": "#002c5f",
+      "Color2": "#a5acaf",
+      "X_Coordinate": -86.162,
+      "Y_Coordinate": 39.76
+    },
+    {
+      "Team": "JAX",
+      "Name": "Jacksonville Jaguars",
+      "Stadium": "TIAA Bank Field",
+      "Address": "1 TIAA Bank Field Dr, Jacksonville, FL 32202",
+      "Color1": "#006778",
+      "Color2": "#000000",
+      "X_Coordinate": -81.6373,
+      "Y_Coordinate": 30.3239
+    },
+    {
+      "Team": "KC",
+      "Name": "Kansas City Chiefs",
+      "Stadium": "Arrowhead Stadium",
+      "Address": "1 Arrowhead Dr, Kansas City, MO 64129",
+      "Color1": "#e31837",
+      "Color2": "#ffb612",
+      "X_Coordinate": -94.4934,
+      "Y_Coordinate": 39.0509
+    },
+    {
+      "Team": "LV",
+      "Name": "Los Vegas Raiders",
+      "Stadium": "Allegiant Stadium",
+      "Address": "3333 Al Davis Way, Las Vegas, NV 89118",
+      "Color1": "#a5acaf",
+      "Color2": "#000000",
+      "X_Coordinate": -115.1837,
+      "Y_Coordinate": 36.0899
+    },
+    {
+      "Team": "LAR",
+      "Name": "Los Angeles Rams",
+      "Stadium": "SoFi Stadium",
+      "Address": "1001 Stadium Dr, Inglewood, CA 90301",
+      "Color1": "#002244",
+      "Color2": "#b3995d",
+      "X_Coordinate": -118.355,
+      "Y_Coordinate": 33.9589
+    },
+    {
+      "Team": "LAC",
+      "Name": "Los Angeles Chargers",
+      "Stadium": "SoFi Stadium",
+      "Address": "1001 Stadium Dr, Inglewood, CA 90301",
+      "Color1": "#002244",
+      "Color2": "#0073cf",
+      "X_Coordinate": -118.355,
+      "Y_Coordinate": 33.9589
+    },
+    {
+      "Team": "MIA",
+      "Name": "Miami Dolphins",
+      "Stadium": "Hard Rock Stadium",
+      "Address": "347 Don Shula Dr, Miami Gardens, FL 33056",
+      "Color1": "#008e97",
+      "Color2": "#f26a24",
+      "X_Coordinate": -80.2388,
+      "Y_Coordinate": 25.958
+    },
+    {
+      "Team": "MIN",
+      "Name": "Minnesota Vikings",
+      "Stadium": "U.S. Bank Stadium",
+      "Address": "401 Chicago Ave, Minneapolis, MN 55415",
+      "Color1": "#4f2683",
+      "Color2": "#ffc62f",
+      "X_Coordinate": -93.26,
+      "Y_Coordinate": 44.9738
+    },
+    {
+      "Team": "NE",
+      "Name": "New England Patriots",
+      "Stadium": "Gillette Stadium",
+      "Address": "1 Patriot Pl, Foxborough, MA 02035",
+      "Color1": "#002244",
+      "Color2": "#c60c30",
+      "X_Coordinate": -71.2668,
+      "Y_Coordinate": 42.088
+    },
+    {
+      "Team": "NO",
+      "Name": "New Orleans Saints",
+      "Stadium": "Mercedes-Benz Superdome",
+      "Address": "1500 Sugar Bowl Dr, New Orleans, LA 70112",
+      "Color1": "#d3bc8d",
+      "Color2": "#000000",
+      "X_Coordinate": -90.0807,
+      "Y_Coordinate": 29.9523
+    },
+    {
+      "Team": "NYG",
+      "Name": "New York Giants",
+      "Stadium": "MetLife Stadium",
+      "Address": "1 MetLife Stadium Dr, East Rutherford, NJ 07073",
+      "Color1": "#0b2265",
+      "Color2": "#a71930",
+      "X_Coordinate": -74.0783,
+      "Y_Coordinate": 40.8169
+    },
+    {
+      "Team": "NYJ",
+      "Name": "New York Jets",
+      "Stadium": "MetLife Stadium",
+      "Address": "1 MetLife Stadium Dr, East Rutherford, NJ 07073",
+      "Color1": "#003f2d",
+      "Color2": "fffffff",
+      "X_Coordinate": -74.0783,
+      "Y_Coordinate": 40.8169
+    },
+    {
+      "Team": "PHI",
+      "Name": "Philadelphia Eagles",
+      "Stadium": "Lincoln Financial Field",
+      "Address": "One Lincoln Financial Field Way, Philadelphia, PA 19148",
+      "Color1": "#004c54",
+      "Color2": "#a5acaf",
+      "X_Coordinate": -75.1669,
+      "Y_Coordinate": 39.9024
+    },
+    {
+      "Team": "PIT",
+      "Name": "Pittsburg Steelers",
+      "Stadium": "Heinz Field",
+      "Address": "100 Art Rooney Ave, Pittsburgh, PA 15212",
+      "Color1": "#000000",
+      "Color2": "#ffb612",
+      "X_Coordinate": -80.0141,
+      "Y_Coordinate": 40.447
+    },
+    {
+      "Team": "SF",
+      "Name": "San Francisco 49ers",
+      "Stadium": "Levi's Stadium",
+      "Address": "4900 Marie P DeBartolo Way, Santa Clara, CA 95054",
+      "Color1": "#aa0000",
+      "Color2": "#b3995d",
+      "X_Coordinate": -121.9685,
+      "Y_Coordinate": 37.4038
+    },
+    {
+      "Team": "SEA",
+      "Name": "Seattle Seahawks",
+      "Stadium": "CenturyLink Field",
+      "Address": "800 Occidental Ave S, Seattle, WA 98134",
+      "Color1": "#002244",
+      "Color2": "#69be28",
+      "X_Coordinate": -122.3332,
+      "Y_Coordinate": 47.5945
+    },
+    {
+      "Team": "TB",
+      "Name": "Tampa Bay Buccaneers",
+      "Stadium": "Raymond James Stadium",
+      "Address": "4201 N Dale Mabry Hwy, Tampa, FL 33607",
+      "Color1": "#d50a0a",
+      "Color2": "#34302b",
+      "X_Coordinate": -82.5053,
+      "Y_Coordinate": 27.976
+    },
+    {
+      "Team": "TEN",
+      "Name": "Tennessee Titans",
+      "Stadium": "Nissan Stadium",
+      "Address": "1 Titans Way, Nashville, TN 37213",
+      "Color1": "#002244",
+      "Color2": "#4b92db",
+      "X_Coordinate": -86.7713,
+      "Y_Coordinate": 36.1665
+    },
+    {
+      "Team": "WSH",
+      "Name": "Washington Football Team",
+      "Stadium": "FedEx Field",
+      "Address": "1600 Fedex Way, Greater Landover, MD 20785",
+      "Color1": "#773141",
+      "Color2": "#ffb612",
+      "X_Coordinate": -76.8649,
+      "Y_Coordinate": 38.9071
+    }
+  ]
+}
