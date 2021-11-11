@@ -10,7 +10,8 @@ class NflTeamPipeline:
         index = 0
         for team in teams:
             data[f"{team}"] = []
-            for matchup_idx in range(index, index+18):
+            end_range = 18 if year == "2021" else 17 
+            for matchup_idx in range(index, index+end_range):
                 week = matchup_idx - index + 1
                 matchup = matchups[matchup_idx]
                 home = True if matchup[0] != '@' else False
