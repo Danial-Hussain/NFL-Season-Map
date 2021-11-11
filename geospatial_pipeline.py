@@ -150,8 +150,9 @@ def generate_schedule_shapefile(year: str = "2021"):
 
 
 def batch_upload_schedules(year: str = "2021"):
-    # Get folders
+    # Get folders and create gis folder
     folders = os.listdir(os.getcwd() + "/data/schedules")
+    new_folder_details = gis.content.create_folder(f"NFL-{year}")
 
     # Zip up the shapefiles
     for folder in folders:
@@ -164,7 +165,10 @@ def batch_upload_schedules(year: str = "2021"):
         if f_name.endswith(".zip"):
             data = f"data/schedules/{f_name}"
             shpfile = gis.content.add({}, data=data)
-            shpfile.publish()
+            published_file = shpfile.publish()
+            shpfile.move(new_folder_details)
+            published_file.move(new_folder_details)
+            published_file.share(everyone=True)
     
 
 if __name__ == "__main__":
