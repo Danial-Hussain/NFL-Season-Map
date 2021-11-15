@@ -10,6 +10,8 @@ from ..items import NFLTeamItem
 class NflTeamsSpider(scrapy.Spider):
     """
     Scraper to get nfl teams and schedule
+    Cmd: scrapy crawl NFL_Teams
+         scrapy crawl NFL_Teams -a year=?
     """
 
     name = "NFL_Teams"
