@@ -22,6 +22,26 @@ class NflTeamPipeline:
                         "Home": home
                     }
                 )
-            index += 18
+            if year == "2021":
+                index += 18
+            else:
+                index += 17
         with open(f"NFL_Season_{year}.json", "w") as f:
             json.dump(data, f)
+
+
+class NflStatsPipeline:
+    def process_item(self, item, spider):
+        with open(f"NFL_Stats.json", "r+") as f:
+            data = json.load(f)
+            team = item["nfl_team"]
+            year = item["year"]
+            points = item["points"]
+            if item["nfl_team"] in data["data"]:
+                data["data"][team]["points"][year] = points
+            else:
+                data["data"][team] = {"points": {year: points}}
+            f.truncate(0)
+            f.seek(0)
+            json.dump(data, f)
+        
