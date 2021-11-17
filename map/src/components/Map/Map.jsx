@@ -1,12 +1,10 @@
 import React, { useRef, useEffect } from "react";
 import FeatureLayer from "@arcgis/core/layers/FeatureLayer";
 import ArcGISMap from "@arcgis/core/Map";
-import DictionaryRenderer from "@arcgis/core/renderers/DictionaryRenderer";
 import MapView from "@arcgis/core/views/MapView";
-import esriConfig from "@arcgis/core/config";
 import "./Map.css";
 
-export const Map = ({ theme, team, year }) => {
+export const Map = ({ theme, team, year, updateDistance }) => {
   const mapDiv = useRef(null);
 
   useEffect(() => {
@@ -19,121 +17,96 @@ export const Map = ({ theme, team, year }) => {
         map,
         container: mapDiv.current,
         center: [-97, 38],
-        zoom: 5,
+        zoom: 4,
         spatialReference: {
           wkid: 3857,
         },
       });
 
       const popupTemplate = {
-        // autocasts as new PopupTemplate()
-        title: "station: {Station_Name}",
+        title: "Game",
         content: [
           {
-            // It is also possible to set the fieldInfos outside of the content
-            // directly in the popupTemplate. If no fieldInfos is specifically set
-            // in the content, it defaults to whatever may be set within the popupTemplate.
             type: "fields",
             fieldInfos: [
               {
-                fieldName: "Fuel_Type_Code",
-                label: "Fuel type",
+                fieldName: "LENGTH",
+                label: "Distance Traveled (km)",
               },
               {
-                fieldName: "EV_Network",
-                label: "EV network",
-              },
-              {
-                fieldName: "EV_Connector_Types",
-                label: "EV connection types",
-              },
-              {
-                fieldName: "Station_Name",
-                label: "Station Name",
+                fieldName: "WEEK",
+                label: "NFL Week",
               },
             ],
           },
         ],
       };
 
-      const scale = 36112;
-      const layer1 = new FeatureLayer({
-        url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/Alternative_Fuel_Station_March2018/FeatureServer",
-        outFields: ["*"],
-        popupTemplate,
-        renderer: new DictionaryRenderer({
-          url: "https://jsapi.maps.arcgis.com/sharing/rest/content/items/30cfbf36efd64ccf92136201d9e852af",
-          fieldMap: {
-            fuel_type: "Fuel_Type_Code",
-          },
-          config: {
-            show_label: "false",
-          },
-          visualVariables: [
-            {
-              type: "size",
-              valueExpression: "$view.scale",
-              stops: [
-                { value: scale / 2, size: 20 },
-                { value: scale * 2, size: 15 },
-                { value: scale * 4, size: 10 },
-                { value: scale * 8, size: 5 },
-                { value: scale * 16, size: 2 },
-                { value: scale * 32, size: 1 },
-              ],
-            },
-          ],
-        }),
-        minScale: 0,
-        maxScale: 10000,
-      });
-
-      const layer2 = new FeatureLayer({
-        url: "https://services1.arcgis.com/4yjifSiIG17X0gW4/arcgis/rest/services/Alternative_Fuel_Station_March2018/FeatureServer",
-        outFields: ["*"],
-        renderer: new DictionaryRenderer({
-          url: "https://jsapi.maps.arcgis.com/sharing/rest/content/items/30cfbf36efd64ccf92136201d9e852af",
-          fieldMap: {
-            fuel_type: "Fuel_Type_Code",
-            connector_types: "EV_Connector_Types",
-            network: "EV_Network",
-            name: "Station_Name",
-          },
-          config: {
-            show_label: "true",
-          },
-        }),
-        minScale: 10000,
-        maxScale: 0,
-      });
-
-      const layer3 = new FeatureLayer({
+      const schedule_layer = new FeatureLayer({
         url: `https://services.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/${team}-${year}/FeatureServer`,
         outFields: ["*"],
+        popupTemplate,
+        fieldMap: {
+          distance: "LENGTH",
+          week: "WEEK",
+        },
         renderer: {
           type: "simple",
           symbol: { type: "simple-fill" },
         },
       });
 
-      // const layer4 = new FeatureLayer({
-      //   url: "https://services.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/stadiums/FeatureServer",
-      //   outFields: ["*"],
-      //   renderer: {
-      //     type: "simple",
-      //     symbol: { type: "simple-fill" },
-      //     visualVariables: [
-      //       {
-      //         size: 50,
-      //         color: "green",
-      //       },
-      //     ],
-      //   },
-      // });
+      const stadium_layer = new FeatureLayer({
+        url: "https://services.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/stadiums/FeatureServer",
+        outFields: ["*"],
+        config: {
+          show_label: "true",
+        },
+        renderer: {
+          type: "simple",
+          symbol: {
+            type: "simple-marker",
+            color: "#353b48",
+            outline: {
+              color: "#f5f6fa",
+              width: 2,
+            },
+          },
+        },
+        labelingInfo: [
+          {
+            symbol: {
+              type: "text",
+              color: "black",
+              font: {
+                family: "Playfair Display",
+                size: 10,
+              },
+            },
+            labelPlacement: "above-center",
+            labelExpressionInfo: {
+              expression: "$feature.STADIUM",
+            },
+          },
+        ],
+      });
 
-      map.addMany([layer1]);
+      view.when(async () => {
+        const query = schedule_layer.createQuery();
+        const { features } = await schedule_layer.queryFeatures(query);
+        let newfeatures = features.map((f) =>
+          parseFloat(f.attributes["LENGTH"])
+        );
+        let sum = 0;
+        for (let i = 0; i < newfeatures.length; i++) {
+          sum += newfeatures[i];
+        }
+        updateDistance(Math.round(sum * 0.62137));
+      });
+
+      map.addMany([schedule_layer, stadium_layer]);
     }
-  }, []);
+  }, [team, year]);
 
   return <div className="mapDiv" ref={mapDiv}></div>;
 };
