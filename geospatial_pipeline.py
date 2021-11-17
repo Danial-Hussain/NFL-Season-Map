@@ -1,6 +1,7 @@
 from arcpy.arcobjects.arcobjects import Array, Point, SpatialReference
 from arcpy.arcobjects.geometries import PointGeometry, Polyline
 from arcpy.management import CreateFeatureclass
+from arcgis.features import FeatureLayer
 from arcgis.geometry import lengths
 from arcgis.geocoding import geocode
 from arcgis.gis import GIS
@@ -90,7 +91,7 @@ def generate_stadium_shapefile(year: str = "2021") -> None:
             print(f"{point} inserted into {new_shape_file}")
 
 
-def generate_schedule_shapefile(year: str = "2021"):
+def generate_schedule_shapefile(year: str = "2021") -> None:
     # Read in the NFL season json file
     with open(f"data/NFL_Season_{year}.json", "r") as file:
         schedule = json.load(file)
@@ -112,6 +113,7 @@ def generate_schedule_shapefile(year: str = "2021"):
             points.append(point)
         
         for i in range(0, len(points)-1):
+            week = f"Week {i+1}"
             if points[i] != points[i+1]:
                 p_line = Polyline(points[i:i+2], SpatialReference(4326))
                 length = lengths(
@@ -124,24 +126,28 @@ def generate_schedule_shapefile(year: str = "2021"):
                     length = 0
                 else:
                     length = length[0]
-                polylines.append((p_line, length))
+                polylines.append((p_line, length, week))
         
         # Make directory
-        os.makedirs(os.getcwd() + f"\data\schedules\{team}-{year}")
+        if not os.path.exists(f"\data\schedules\{year}\{team}-{year}"):
+            os.makedirs(os.getcwd() + f"\data\schedules\{year}\{team}-{year}")
 
         # Add data to shapefile
         new_shape_file = CreateFeatureclass(
-            out_path = os.getcwd() + f"\data\schedules\{team}-{year}",
+            out_path = os.getcwd() + f"\data\schedules\{year}\{team}-{year}",
             out_name = f"{team}_schedule.shp",
             geometry_type = "POLYLINE",
             spatial_reference = 4326
         )
 
         # Add fields to shapefile
-        arcpy.AddField_management(new_shape_file, field_name="LENGTH", field_type="TEXT")
+        arcpy.AddField_management(
+            new_shape_file, field_name="LENGTH", field_type="TEXT"
+        )
+        arcpy.AddField_management(new_shape_file, field_name="WEEK", field_type="TEXT")
 
         with arcpy.da.InsertCursor(
-            new_shape_file, ['SHAPE@', 'LENGTH']
+            new_shape_file, ['SHAPE@', 'LENGTH', 'WEEK']
         ) as insert_cursor:
             for line in polylines:
                 print("Inserting...")
@@ -149,33 +155,78 @@ def generate_schedule_shapefile(year: str = "2021"):
                 print(f"{line} inserted into {new_shape_file}")
 
 
-def batch_upload_schedules(year: str = "2021"):
+def batch_upload_stadium() -> None:
+    # Zip up the shapefile
+    shutil.make_archive("data/stadiums", 'zip', os.getcwd() + "/data")
+
+    # Upload to arcgis online
+    file_path = "data/stadiums.zip"
+    shpfile = gis.content.add({}, data=file_path)
+    published_file = shpfile.publish()
+    published_file.share(everyone=True)
+
+
+def batch_upload_schedules(year: str = "2021") -> None:
     # Get folders and create gis folder
-    folders = os.listdir(os.getcwd() + "/data/schedules")
+    folders = os.listdir(os.getcwd() + f"/data/schedules/{year}")
     new_folder_details = gis.content.create_folder(f"NFL-{year}")
 
     # Zip up the shapefiles
     for folder in folders:
         shutil.make_archive(
-            f"data/schedules/{folder}", 'zip', os.getcwd() + f"/data/schedules/{folder}"
+            f"data/schedules/{year}/{folder}", 'zip', os.getcwd() + f"/data/schedules/{year}/{folder}"
         )
+
+    folders = os.listdir(os.getcwd() + f"/data/schedules/{year}")
 
     # Upload to arcgis online
     for f_name in folders:
         if f_name.endswith(".zip"):
-            data = f"data/schedules/{f_name}"
+            data = f"data/schedules/{year}/{f_name}"
             shpfile = gis.content.add({}, data=data)
             published_file = shpfile.publish()
             shpfile.move(new_folder_details)
             published_file.move(new_folder_details)
             published_file.share(everyone=True)
-    
+
+
+def euclidean_distance_query(start_year: int = 2015, end_year: int = 2021) -> None:
+    # Read in teams data
+    with open(f"data/NFL_Teams_2021.json", "r") as file:
+        data = json.load(file)
+
+    # Create new json file with total distances
+    base_url = "https://services.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/"
+    json_dic = {"data": {}}
+    for team in data["teams"]:
+        abbr = team["Team"]
+        for year in range(start_year, end_year+1):
+            new_url = base_url + f"{abbr}-{year}/FeatureServer/0"
+            layer = FeatureLayer(new_url)
+            results = layer.query(out_fields="LENGTH")
+            distance = round(sum([float(x) for x in results.sdf["LENGTH"]]) * 0.62137)
+            if str(year) in json_dic["data"]:
+                json_dic["data"][str(year)][abbr] = distance
+            else:
+                json_dic["data"][str(year)] = {abbr: distance}
+
+    # Write out json data
+    with open(f"data/NFL_Teams_Distance.json", "w") as f:
+        json.dump(json_dic, f)
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Geospatial Data Pipeline")
 
-    parser.add_argument('-y', '--year', metavar='Y', type=str, nargs = '?', const="2021",
-                        help='which year\'s data to apply the geosptial pipeline')
+    parser.add_argument(
+        '-y', 
+        '--year', 
+        metavar='Y', 
+        type=str, 
+        nargs='?', 
+        const="2021",
+        help='which year\'s data to apply the geosptial pipeline',
+    )
 
     args = parser.parse_args()
 
@@ -188,8 +239,14 @@ if __name__ == "__main__":
     generate_stadium_shapefile(year=args.year)
     print("Generated shapefile for stadiums")
 
+    batch_upload_stadium()
+    print("Uploaded stadium shapefile to ArcGIS Online")
+
     generate_schedule_shapefile(year=args.year)
     print("Generated shapefile for each team's schedule")
 
     batch_upload_schedules(year=args.year)
-    print("Uploaded shapefiles to ArcGIS Online")
+    print("Uploaded schedule shapefiles to ArcGIS Online")
+
+    euclidean_distance_query()
+    print("Euclidean distance calculated")
