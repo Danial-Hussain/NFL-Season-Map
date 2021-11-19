@@ -3,6 +3,7 @@ import { Map } from "../components/Map/Map";
 import { Navbar } from "../components/Navbar";
 import { TeamButton } from "../components/TeamButton";
 import { Stats } from "../components/Stats";
+import { Plot } from "../components/Plot";
 import data from "../data/NFL_Teams.json";
 import stats from "../data/NFL_Stats.json";
 import distance from "../data/NFL_Teams_Distance.json";
@@ -21,6 +22,7 @@ export const Home = () => {
   const [distanceTraveled, setDistanceTraveld] = useState(0);
   const [pointsPerMi, setPointsPerMi] = useState("0");
   const [rank, setRank] = useState(0);
+  const [chartOpen, setChartOpen] = useState(false);
 
   useEffect(() => {
     let points = stats["data"][team]["points"][year];
@@ -73,6 +75,7 @@ export const Home = () => {
             pointsPerMi={pointsPerMi}
             rank={rank}
           />
+          <Plot team={team} year={year} />
         </TeamButtonWrapper>
       </TeamButtonComponent>
       <Map
