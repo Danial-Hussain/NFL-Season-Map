@@ -45,3 +45,19 @@ class NflStatsPipeline:
             f.seek(0)
             json.dump(data, f)
         
+
+class NflWinRatePipeline:
+    def process_item(self, item, spider):
+        with open(f"NFL_WinRate.json", "r+") as f:
+            data = json.load(f)
+            teams = item["teams"]
+            year = item["year"]
+            win_rates = item["win_rates"]
+            for i, team in enumerate(teams):
+                if team not in data["data"]:
+                    data["data"][team] = {year: win_rates[i]}
+                else:
+                    data["data"][team][year] = win_rates[i]
+            f.truncate(0)
+            f.seek(0)
+            json.dump(data, f)
